@@ -1,5 +1,6 @@
 build/
 application.pro
+application.pro.*
 *.o
 Makefile
 .qmake.stash
