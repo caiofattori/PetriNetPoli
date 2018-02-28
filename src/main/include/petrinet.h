@@ -22,13 +22,14 @@
 #define PETRINET_H
 
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QWidget>
 
 class PetriNetWindow : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	PetriNetWindow();
+    explicit PetriNetWindow(QWidget *parent = nullptr);
 
 };
 

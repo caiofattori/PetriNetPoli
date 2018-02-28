@@ -19,20 +19,36 @@
 */
 
 #include <QtWidgets/QWidget>
-#include <QtWidgets/QVBoxLayout>
-#include <QFile>
-#include <QFormBuilder>
-
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QToolBox>
+#include <QtWidgets/QTabWidget>
+#include <QtWidgets/QGroupBox>
 #include "petrinet.h"
 
 
-PetriNetWindow::PetriNetWindow()
+PetriNetWindow::PetriNetWindow(QWidget *parent)
+    : QMainWindow(parent)
 {
-    QFormBuilder loader;
-    QFile form(":/src/main/resource/petrinetwindow.ui");
-    form.open(QFile::ReadOnly);
-    QWidget* wg = loader.load(&form, this);
-    form.close();
+    QWidget* wg = new QWidget;
+    QHBoxLayout *layout = new QHBoxLayout;
+    wg->setLayout(layout);
+    QToolBox *tbox = new QToolBox;
+    QWidget *t0 = new QWidget;
+    QWidget *t1 = new QWidget;
+    tbox->addItem(t0, "tools0");
+    tbox->addItem(t1, "tools1");
+    QTabWidget *twid = new QTabWidget;
+    QWidget *p0 = new QWidget;
+    QWidget *p1 = new QWidget;
+    twid->addTab(p0, "tab1");
+    twid->addTab(p1, "tab2");
+    QGroupBox *gbox = new QGroupBox;
+    layout->addWidget(tbox);
+    layout->addWidget(twid);
+    layout->addWidget(gbox);
+    setCentralWidget(wg);
+    setWindowTitle("VAMOS COMEÇAR");
 }
 
 
