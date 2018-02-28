@@ -27,6 +27,8 @@ int main(int argc, char *argv[]){
 	QApplication app(argc, argv);
 
 	PetriNetWindow mainwin;
+    //Timer::singleShot(1000, this, SLOT(showFullScreen()));
+    mainwin.showMaximized();
 
 	mainwin.show();
 	return app.exec();

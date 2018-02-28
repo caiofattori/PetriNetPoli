@@ -24,6 +24,10 @@
 #include <QtWidgets/QToolBox>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QPushButton>
+#include <QIcon>
+#include <QtWidgets/QGridLayout>
 #include "petrinet.h"
 
 
@@ -34,10 +38,22 @@ PetriNetWindow::PetriNetWindow(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout;
     wg->setLayout(layout);
     QToolBox *tbox = new QToolBox;
+    tbox->setMaximumWidth(150);
     QWidget *t0 = new QWidget;
+    QGridLayout *lay_t0 = new QGridLayout;
+    QIcon icon_place("./src/main/resource/place_icon.svg");
+    QPushButton *btn_place = new QPushButton(icon_place, "", this);
+    QIcon icon_transition("./src/main/resource/transition_icon.svg");
+    QPushButton *btn_transition = new QPushButton(icon_transition, "", this);
+    QIcon icon_arc("./src/main/resource/arc_icon.svg");
+    QPushButton *btn_arc = new QPushButton(icon_arc, "", this);
+    t0->setLayout(lay_t0);
+    lay_t0->addWidget(btn_place,0,0,Qt::AlignLeft | Qt::AlignTop);
+    lay_t0->addWidget(btn_transition,0,1,Qt::AlignLeft | Qt::AlignTop);
+    lay_t0->addWidget(btn_arc,0,2,Qt::AlignLeft | Qt::AlignTop);
     QWidget *t1 = new QWidget;
-    tbox->addItem(t0, "tools0");
-    tbox->addItem(t1, "tools1");
+    tbox->addItem(t0, "PN elements");
+    tbox->addItem(t1, "Graphics");
     QTabWidget *twid = new QTabWidget;
     QWidget *p0 = new QWidget;
     QWidget *p1 = new QWidget;
@@ -48,7 +64,7 @@ PetriNetWindow::PetriNetWindow(QWidget *parent)
     layout->addWidget(twid);
     layout->addWidget(gbox);
     setCentralWidget(wg);
-    setWindowTitle("VAMOS COMEÇAR");
+    setWindowTitle("Petri Net Poli");
 }
 
 
