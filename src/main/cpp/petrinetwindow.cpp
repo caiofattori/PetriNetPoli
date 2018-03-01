@@ -22,12 +22,15 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QToolBox>
+#include <QtWidgets/QToolBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QPushButton>
 #include <QIcon>
 #include <QtWidgets/QGridLayout>
+#include <iostream>
+#include <string>
 #include "petrinet.h"
 
 
@@ -37,8 +40,27 @@ PetriNetWindow::PetriNetWindow(QWidget *parent)
     QWidget* wg = new QWidget;
     QHBoxLayout *layout = new QHBoxLayout;
     wg->setLayout(layout);
-    QToolBox *tbox = new QToolBox;
+    tbox = new QToolBox;
     tbox->setMaximumWidth(150);
+    createPNBasicToolBox();
+
+    twid = new QTabWidget;
+    createEditPanel();
+
+    tbar = new QToolBar;
+    createBasicToolBar();
+
+    //QGroupBox *gbox = new QGroupBox;
+    layout->addWidget(tbox);
+    layout->addWidget(twid);
+    addToolBar(tbar);
+    //layout->addWidget(gbox);
+    setCentralWidget(wg);
+    setWindowTitle("Petri Net Poli");
+}
+
+void PetriNetWindow::createPNBasicToolBox()
+{
     QWidget *t0 = new QWidget;
     QGridLayout *lay_t0 = new QGridLayout;
     QIcon icon_place("./src/main/resource/place_icon.svg");
@@ -51,20 +73,34 @@ PetriNetWindow::PetriNetWindow(QWidget *parent)
     lay_t0->addWidget(btn_place,0,0,Qt::AlignLeft | Qt::AlignTop);
     lay_t0->addWidget(btn_transition,0,1,Qt::AlignLeft | Qt::AlignTop);
     lay_t0->addWidget(btn_arc,0,2,Qt::AlignLeft | Qt::AlignTop);
-    QWidget *t1 = new QWidget;
+    count_net = 0;
     tbox->addItem(t0, "PN elements");
-    tbox->addItem(t1, "Graphics");
-    QTabWidget *twid = new QTabWidget;
-    QWidget *p0 = new QWidget;
-    QWidget *p1 = new QWidget;
-    twid->addTab(p0, "tab1");
-    twid->addTab(p1, "tab2");
-    QGroupBox *gbox = new QGroupBox;
-    layout->addWidget(tbox);
-    layout->addWidget(twid);
-    layout->addWidget(gbox);
-    setCentralWidget(wg);
-    setWindowTitle("Petri Net Poli");
 }
 
+void PetriNetWindow::createGraphicToolBox()
+{
+    QWidget *t1 = new QWidget;
+    tbox->addItem(t1, "Graphics");
+}
 
+void PetriNetWindow::createEditPanel()
+{
+
+}
+
+void PetriNetWindow::createBasicToolBar()
+{
+    const QIcon icon_new = QIcon::fromTheme("document-new", QIcon("./src/main/resource/new_icon.svg"));
+    QAction *act_new = new QAction(icon_new, tr("&New..."), this);
+    act_new->setStatusTip(tr("Create a new PNML file"));
+    connect(act_new, &QAction::triggered, this, &PetriNetWindow::addNewNet);
+    tbar->addAction(act_new);
+}
+
+void PetriNetWindow::addNewNet()
+{
+    PetriNetEditableNet *new_net = new PetriNetEditableNet;
+    twid->addTab(new_net, "new_pnml" + QString::number(count_net));
+    twid->setCurrentWidget(new_net);
+    count_net ++;
+}

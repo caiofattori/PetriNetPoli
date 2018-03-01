@@ -23,6 +23,9 @@
 
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
+class QToolBox;
+class QTabWidget;
+class QToolBar;
 
 class PetriNetWindow : public QMainWindow
 {
@@ -30,6 +33,26 @@ class PetriNetWindow : public QMainWindow
 
 public:
     explicit PetriNetWindow(QWidget *parent = nullptr);
+
+private:
+    void createPNBasicToolBox ();
+    void createGraphicToolBox ();
+    void createEditPanel ();
+    void createBasicToolBar();
+    void addNewNet();
+    QToolBox *tbox;
+    QTabWidget *twid;
+    QToolBar *tbar;
+    int count_net;
+
+};
+
+class PetriNetEditableNet : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit PetriNetEditableNet();
 
 };
 
