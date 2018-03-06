@@ -57,6 +57,7 @@ PetriNetWindow::PetriNetWindow(QWidget *parent)
     //layout->addWidget(gbox);
     setCentralWidget(wg);
     setWindowTitle("Petri Net Poli");
+    count_net = 0;
 }
 
 void PetriNetWindow::createPNBasicToolBox()
@@ -73,7 +74,7 @@ void PetriNetWindow::createPNBasicToolBox()
     lay_t0->addWidget(btn_place,0,0,Qt::AlignLeft | Qt::AlignTop);
     lay_t0->addWidget(btn_transition,0,1,Qt::AlignLeft | Qt::AlignTop);
     lay_t0->addWidget(btn_arc,0,2,Qt::AlignLeft | Qt::AlignTop);
-    count_net = 0;
+    connect(btn_place, &QAbstractButton::clicked, this, &PetriNetWindow::addNewBasicPlace);
     tbox->addItem(t0, "PN elements");
 }
 
@@ -103,4 +104,11 @@ void PetriNetWindow::addNewNet()
     twid->addTab(new_net, "new_pnml" + QString::number(count_net));
     twid->setCurrentWidget(new_net);
     count_net ++;
+}
+
+void PetriNetWindow::addNewBasicPlace()
+{
+    if(twid->count() > 0){
+        ((PetriNetEditableNet *)twid->currentWidget())->addNewBasicPlace();
+    }
 }

@@ -40,6 +40,7 @@ private:
     void createEditPanel ();
     void createBasicToolBar();
     void addNewNet();
+    void addNewBasicPlace();
     QToolBox *tbox;
     QTabWidget *twid;
     QToolBar *tbar;
@@ -47,12 +48,18 @@ private:
 
 };
 
+class QGraphicsScene;
+
 class PetriNetEditableNet : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit PetriNetEditableNet();
+    void addNewBasicPlace();
+
+private:
+    QGraphicsScene *gs;
 
 };
 
