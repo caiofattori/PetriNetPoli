@@ -29,9 +29,11 @@
 #include <QtWidgets/QPushButton>
 #include <QIcon>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QStatusBar>
 #include <iostream>
 #include <string>
 #include "petrinet.h"
+#include "petrinet_utils.h"
 
 
 PetriNetWindow::PetriNetWindow(QWidget *parent)
@@ -58,6 +60,8 @@ PetriNetWindow::PetriNetWindow(QWidget *parent)
     setCentralWidget(wg);
     setWindowTitle("Petri Net Poli");
     count_net = 0;
+    stmach = new PetriNetStMach(this);
+    statusBar()->showMessage("Começando");
 }
 
 void PetriNetWindow::createPNBasicToolBox()
@@ -65,7 +69,7 @@ void PetriNetWindow::createPNBasicToolBox()
     QWidget *t0 = new QWidget;
     QGridLayout *lay_t0 = new QGridLayout;
     QIcon icon_place("./src/main/resource/place_icon.svg");
-    QPushButton *btn_place = new QPushButton(icon_place, "", this);
+    btn_place = new QPushButton(icon_place, "", this);
     QIcon icon_transition("./src/main/resource/transition_icon.svg");
     QPushButton *btn_transition = new QPushButton(icon_transition, "", this);
     QIcon icon_arc("./src/main/resource/arc_icon.svg");
@@ -74,7 +78,7 @@ void PetriNetWindow::createPNBasicToolBox()
     lay_t0->addWidget(btn_place,0,0,Qt::AlignLeft | Qt::AlignTop);
     lay_t0->addWidget(btn_transition,0,1,Qt::AlignLeft | Qt::AlignTop);
     lay_t0->addWidget(btn_arc,0,2,Qt::AlignLeft | Qt::AlignTop);
-    connect(btn_place, &QAbstractButton::clicked, this, &PetriNetWindow::addNewBasicPlace);
+    //connect(btn_place, &QAbstractButton::clicked, this, &PetriNetWindow::addNewBasicPlace);
     tbox->addItem(t0, "PN elements");
 }
 

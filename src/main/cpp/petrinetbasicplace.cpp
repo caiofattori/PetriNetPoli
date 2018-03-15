@@ -9,10 +9,10 @@
 #include <QtWidgets/QWidget>
 #include <QtGui/QBrush>
 
-PNBasicPlace::PNBasicPlace()
+PNBasicPlace::PNBasicPlace(int x, int y)
     : QGraphicsEllipseItem()
 {
-    item_draw = QRectF(0, 0, 20, 20);
+    item_draw = QRectF(x, y, 20, 20);
     item_brush = QBrush(Qt::white, Qt::SolidPattern);
 }
 

@@ -13,7 +13,7 @@ class PNBasicPlace : public QGraphicsEllipseItem
 {
 
 public:
-    explicit PNBasicPlace();
+    explicit PNBasicPlace(int, int);
     virtual ~PNBasicPlace();
     virtual void paint(QPainter *, const QStyleOptionGraphicsItem *option, QWidget *widget = Q_NULLPTR);
     //virtual QRectF boundingRect();

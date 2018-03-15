@@ -1,7 +1,7 @@
 build/
 application.pro
 application.pro.*
-*.o
 Makefile
 .qmake.stash
-moc_petrinet.cpp
+.moc
+.objs

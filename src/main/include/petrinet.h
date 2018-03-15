@@ -26,6 +26,8 @@
 class QToolBox;
 class QTabWidget;
 class QToolBar;
+class QPushButton;
+class PetriNetStMach;
 
 class PetriNetWindow : public QMainWindow
 {
@@ -33,6 +35,7 @@ class PetriNetWindow : public QMainWindow
 
 public:
     explicit PetriNetWindow(QWidget *parent = nullptr);
+    const QPushButton *btn_place;
 
 private:
     void createPNBasicToolBox ();
@@ -45,6 +48,7 @@ private:
     QTabWidget *twid;
     QToolBar *tbar;
     int count_net;
+    PetriNetStMach *stmach;
 
 };
 

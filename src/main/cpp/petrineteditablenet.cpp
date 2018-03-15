@@ -18,7 +18,7 @@ PetriNetEditableNet::PetriNetEditableNet()
 
 void PetriNetEditableNet::addNewBasicPlace()
 {
-    PNBasicPlace *p = new PNBasicPlace();
+    PNBasicPlace *p = new PNBasicPlace(10,10);
     gs->addItem(p);
 }
 
