@@ -1,31 +1,41 @@
-#include "petrinet_utils.h"
+
 #include<QtCore/QStateMachine>
 #include<QtCore/QState>
 #include<QtWidgets/QKeyEventTransition>
 #include<QtCore/QSignalTransition>
+#include<QtCore/QObject>
+#include<QtWidgets/QPushButton>
+#include<QtCore/QEvent>
 #include "petrinet.h"
+#include "petrinet_utils.h"
+#include "petrinet_objects.h"
 
-PetriNetStMach::PetriNetStMach(PetriNetWindow *window)
+PetriNetStMach::PetriNetStMach(PetriNetWindow *window, PetriNetEditableNet *view)
     :QStateMachine()
 {
-    idle = new QState();
-    QState *idle_shift = new QState();
-    inserting = new QState();
-    QState *inserting_shift = new QState();
+    idle = new PetriNetStateIdle();
+    idle_shift = new PetriNetStateIdle();
+    inserting = new PetriNetStateInserting();
+    inserting_shift = new PetriNetStateInserting();
     this->window = window;
+    this->view = view;
 
     this->addState(idle);
     this->addState(idle_shift);
     this->addState(inserting);
     this->addState(inserting_shift);
-    QSignalTransition *place = new QSignalTransition(window->btn_place, SIGNAL(clicked()));
-    place->setTargetState(inserting);
-    idle->addTransition(place);
-    QSignalTransition *unplace = new QSignalTransition(window->btn_place, SIGNAL(clicked()));
-    unplace->setTargetState(idle);
-    inserting->addTransition(unplace);
+    idle->addTransition(window->btn_place, SIGNAL(clicked()), inserting);
+    inserting->addTransition(window->btn_place, SIGNAL(clicked()), idle);
+    //QEventTransition *t = new QEventTransition(view->gs, QEvent::MouseButtonPress);
+    //t->setTargetState(idle);
+    //inserting->addTransition(t);
+    idle_shift->addTransition(window->btn_place, SIGNAL(clicked()), inserting_shift);
+    inserting_shift->addTransition(window->btn_place, SIGNAL(clicked()), idle_shift);
+
+
     this->createShiftTransition(idle, idle_shift);
     this->createShiftTransition(inserting, inserting_shift);
+    this->setInitialState(idle);
     //window->statusBar()
 }
 

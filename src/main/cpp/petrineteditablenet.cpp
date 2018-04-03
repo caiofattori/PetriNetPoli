@@ -5,15 +5,26 @@
 #include "petrinet.h"
 #include "petrinet_objects.h"
 #include "petrinet_elements.h"
+#include "petrinet_utils.h"
 
-PetriNetEditableNet::PetriNetEditableNet()
+PetriNetEditableNet::PetriNetEditableNet(PetriNetWindow *win)
     : QWidget()
 {
+    this->win = win;
     QVBoxLayout *lay = new QVBoxLayout();
     gs = new PNGraphicsScene(0,0,1920,1080, this);
-    QGraphicsView *gv = new QGraphicsView(gs, this);
+    gv = new PNGraphicsView(gs, this);
+    stmach = new PetriNetStMach(win, this);
+    stmach->start();
     lay->addWidget(gv);
     this->setLayout(lay);
+}
+
+void PetriNetEditableNet::showEvent(QShowEvent *event)
+{
+    delete stmach;
+    stmach = new PetriNetStMach(this->win, this);
+    stmach->start();
 }
 
 void PetriNetEditableNet::addNewBasicPlace()

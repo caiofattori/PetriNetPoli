@@ -28,6 +28,8 @@ class QTabWidget;
 class QToolBar;
 class QPushButton;
 class PetriNetStMach;
+class PNGraphicsScene;
+class PNGraphicsView;
 
 class PetriNetWindow : public QMainWindow
 {
@@ -35,7 +37,7 @@ class PetriNetWindow : public QMainWindow
 
 public:
     explicit PetriNetWindow(QWidget *parent = nullptr);
-    const QPushButton *btn_place;
+    QPushButton *btn_place;
 
 private:
     void createPNBasicToolBox ();
@@ -48,23 +50,24 @@ private:
     QTabWidget *twid;
     QToolBar *tbar;
     int count_net;
-    PetriNetStMach *stmach;
-
 };
-
-class QGraphicsScene;
 
 class PetriNetEditableNet : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PetriNetEditableNet();
+    explicit PetriNetEditableNet(PetriNetWindow *);
     void addNewBasicPlace();
+    PNGraphicsScene *gs;
+    PNGraphicsView *gv;
 
 private:
-    QGraphicsScene *gs;
+    PetriNetStMach *stmach;
+    PetriNetWindow *win;
 
+protected:
+    void showEvent(QShowEvent *);
 };
 
 #endif
