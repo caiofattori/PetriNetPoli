@@ -15,12 +15,16 @@ class PetriNetStMach : public QStateMachine
 
 public:
     explicit PetriNetStMach(PetriNetWindow *, PetriNetEditableNet *);
+    enum Mstate{ IDLE=1, INSERTING=2 };
     PetriNetStateIdle *idle;
     PetriNetStateInserting *inserting;
     PetriNetStateIdle *idle_shift;
     PetriNetStateInserting *inserting_shift;
     PetriNetWindow *window;
     PetriNetEditableNet *view;
+    enum Mstate currentState;
+    void setState(Mstate);
+    PetriNetStMach::Mstate getState();
 
 private:
     void createShiftTransition(QState *, QState *);

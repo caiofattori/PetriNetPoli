@@ -61,8 +61,6 @@ public:
     void addNewBasicPlace();
     PNGraphicsScene *gs;
     PNGraphicsView *gv;
-
-private:
     PetriNetStMach *stmach;
     PetriNetWindow *win;
 

@@ -19,6 +19,7 @@ void PetriNetStateIdle::onEntry(QEvent *event)
     else{
         m->window->statusBar()->showMessage("Idle");
     }
+    m->setState(PetriNetStMach::IDLE);
 }
 
 void PetriNetStateIdle::onExit(QEvent *event)

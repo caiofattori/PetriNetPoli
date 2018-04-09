@@ -19,7 +19,7 @@ void PetriNetStateInserting::onEntry(QEvent *event)
     else{
         m->window->statusBar()->showMessage("Inserting");
     }
-
+    m->setState(PetriNetStMach::INSERTING);
 }
 
 void PetriNetStateInserting::onExit(QEvent *event)

@@ -10,7 +10,7 @@
 #include <QtGui/QBrush>
 
 PNBasicPlace::PNBasicPlace(int x, int y)
-    : QGraphicsEllipseItem()
+    : QGraphicsEllipseItem(x, y, 20, 20)
 {
     item_draw = QRectF(x, y, 20, 20);
     item_brush = QBrush(Qt::white, Qt::SolidPattern);

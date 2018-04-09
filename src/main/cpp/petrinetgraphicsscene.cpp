@@ -1,16 +1,19 @@
-
 #include <QtWidgets/QGraphicsScene>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QPushButton>
 #include <QtCore/QPointF>
 #include <QtCore/QRectF>
+#include <QtCore/QString>
 #include <QtGui/QPainter>
 #include <QtGui/QPen>
 #include <cmath>
-#include<iostream>
+#include <iostream>
 #include "petrinet.h"
 #include "petrinet_objects.h"
 #include "petrinet_utils.h"
+#include "petrinet_elements.h"
+#include <string>
 
 PNGraphicsScene::PNGraphicsScene(qreal x, qreal y, qreal width, qreal height, QObject *parent)
     :QGraphicsScene(x, y, width, height, parent)
@@ -43,13 +46,12 @@ PNGraphicsView::PNGraphicsView(PNGraphicsScene *gs, QWidget *parent)
 {
     this->x_clicked = -1;
     this->y_clicked = -1;
+    my_mach = ((PetriNetEditableNet *)parent)->stmach;
+    btn_place = ((PetriNetEditableNet *)parent)->win->btn_place;
 }
 
 void PNGraphicsView::mousePressEvent(QMouseEvent *e)
 {
-    QMessageBox m;
-    m.setText("Bla");
-    m.exec();
     QPointF pt = mapToScene(e->pos());
     double aux = fmod(pt.x(),20.0);
     if(aux > 10){
@@ -65,4 +67,13 @@ void PNGraphicsView::mousePressEvent(QMouseEvent *e)
     else{
         this->y_clicked = pt.y() - aux;
     }
+
+    if(my_mach->getState() == PetriNetStMach::INSERTING){
+        if(btn_place->isChecked()){
+            PNBasicPlace *p = new PNBasicPlace(x_clicked, y_clicked);
+            scene()->addItem(p);
+        }
+    }
+
+    emit mouseLeftClick();
 }

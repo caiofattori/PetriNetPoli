@@ -10,6 +10,8 @@ class QPainter;
 class QRectF;
 class QPointF;
 class QObject;
+class PetriNetStMach;
+class QPushButton;
 
 class PNGraphicsScene : public QGraphicsScene
 {
@@ -36,9 +38,14 @@ public:
     explicit PNGraphicsView(PNGraphicsScene *, QWidget *);
     int x_clicked;
     int y_clicked;
+    PetriNetStMach *my_mach;
+    QPushButton *btn_place;
 
 public slots:
     void mousePressEvent(QMouseEvent *);
+
+signals:
+    void mouseLeftClick();
 };
 
 #endif // PETRINET_OBJECTS_H

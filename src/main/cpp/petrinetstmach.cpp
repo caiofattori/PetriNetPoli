@@ -26,9 +26,7 @@ PetriNetStMach::PetriNetStMach(PetriNetWindow *window, PetriNetEditableNet *view
     this->addState(inserting_shift);
     idle->addTransition(window->btn_place, SIGNAL(clicked()), inserting);
     inserting->addTransition(window->btn_place, SIGNAL(clicked()), idle);
-    //QEventTransition *t = new QEventTransition(view->gs, QEvent::MouseButtonPress);
-    //t->setTargetState(idle);
-    //inserting->addTransition(t);
+    inserting->addTransition(view->gv, SIGNAL(mouseLeftClick()), idle);
     idle_shift->addTransition(window->btn_place, SIGNAL(clicked()), inserting_shift);
     inserting_shift->addTransition(window->btn_place, SIGNAL(clicked()), idle_shift);
 
@@ -36,7 +34,18 @@ PetriNetStMach::PetriNetStMach(PetriNetWindow *window, PetriNetEditableNet *view
     this->createShiftTransition(idle, idle_shift);
     this->createShiftTransition(inserting, inserting_shift);
     this->setInitialState(idle);
+    currentState = PetriNetStMach::IDLE;
     //window->statusBar()
+}
+
+void PetriNetStMach::setState(Mstate s)
+{
+    currentState = s;
+}
+
+PetriNetStMach::Mstate PetriNetStMach::getState()
+{
+    return currentState;
 }
 
 void PetriNetStMach::createShiftTransition(QState *s1, QState *s2)
